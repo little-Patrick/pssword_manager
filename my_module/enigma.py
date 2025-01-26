@@ -1,5 +1,6 @@
 import ipdb
 import string
+class Enigma:
     def __init__(self, password, key, date):
         self.password = password
         self.key = key
@@ -39,15 +40,30 @@ import string
         return final
 
     def rotate(self, l, n):
-        n = n % len(lst)
+        if len(l) == 0:
+            return l
+        n = n % len(l)
         return l[n:] + l[:n]
 
     def offest(self):
-       hash_letter_key = {}
-       letter_key = self.letters()
-       for index, value in enumerate(letter_key):
-            hash_letter_key[value] = value
-       ipdb.set_trace()
+        hash_letter_key = {}
+        letter_key = self.letters()
+        for index, value in enumerate(letter_key):
+             hash_letter_key[value] = value
+
+        a_key = hash_letter_key.copy()
+        b_key = hash_letter_key.copy()
+        c_key = hash_letter_key.copy()
+        d_key = hash_letter_key.copy()
+
+        a_offset = self.rotate(letter_key, self.final_key()["a"])
+        b_offset = self.rotate(letter_key, self.final_key()["b"])
+        c_offset = self.rotate(letter_key, self.final_key()["c"])
+        d_offset = self.rotate(letter_key, self.final_key()["d"])
+ 
+        for index, key in enumerate(a_key.keys()):
+            a_key[key] = a_offset[index]
+        ipdb.set_trace()
 
     def reverse_shift(self):
         pass
